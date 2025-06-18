@@ -1,0 +1,42 @@
+.venv/
+.env
+.idea/
+# Byte-compiled / optimized / DLL files
+__pycache__/
+
+
+lib64/
+parts/
+sdist/
+var/
+wheels/
+
+# Unit test / coverage reports
+.pytest_cache/
+cover/
+
+# PyBuilder
+.pybuilder/
+target/
+
+
+# Environments
+env/
+ENV/
+env.bak/
+.venv.bak/
+
+
+# mypy
+.mypy_cache/
+
+# Pyre type checker
+.pyre/
+
+# pytype global type analyzer
+.pytype/
+
+
+# Linet For Api Router
+.ruff_cache/
+
