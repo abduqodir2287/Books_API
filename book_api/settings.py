@@ -1,4 +1,6 @@
 import os
+from datetime import timedelta
+
 import environ
 from pathlib import Path
 
@@ -26,6 +28,7 @@ ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 INSTALLED_APPS = [
     "rest_framework",
     "rest_framework_simplejwt",
+    'rest_framework_simplejwt.token_blacklist',
     "django_filters",
     "category",
     "books",
@@ -55,6 +58,20 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
 }
+
+
+SIMPLE_JWT = {
+
+    'ROTATE_REFRESH_TOKENS': True,
+
+    'BLACKLIST_AFTER_ROTATION': True,
+
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=30),
+
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=60),
+
+}
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
