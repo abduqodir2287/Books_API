@@ -1,8 +1,9 @@
 from rest_framework.routers import DefaultRouter
 
-from .views import BooksViewSet
+from .views import ReviewViewSet
+
 
 router = DefaultRouter()
-router.register(r"books", BooksViewSet, basename='books')
+router.register(r"", ReviewViewSet, basename="Comments")
 
 urlpatterns = router.urls

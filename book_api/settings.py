@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     "category",
     "books",
     "users",
+    "commentary",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -71,6 +72,10 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=60),
 
 }
+
+
+# Celery settings
+CELERY_BROKER_URL = env("REDIS_URL")
 
 
 MIDDLEWARE = [

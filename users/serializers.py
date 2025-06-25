@@ -31,3 +31,9 @@ class UserSerializer(ModelSerializer):
         return instance
 
 
+class UserInfoSerializer(ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["id", "username"]
+
+

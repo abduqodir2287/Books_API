@@ -7,12 +7,11 @@ class IsSuperAdmin(BasePermission):
         return request.user.is_authenticated and request.user.role == "superadmin"
 
 
-class IsSelfOrReadOnly(BasePermission):
-
+class IsSelfOrSuperadmin(BasePermission):
     def has_object_permission(self, request, view, obj):
-        if request.method in SAFE_METHODS:
+        if request.user.is_authenticated and request.user.role == "superadmin":
             return True
 
-        return obj == request.user
+        return obj.user == request.user
 
 
