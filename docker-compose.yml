@@ -1,0 +1,54 @@
+services:
+  books_db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+
+    volumes:
+      - books_db:/var/lib/postgresql/data/
+
+    restart: on-failure
+
+  redis:
+    image: redis:7
+    container_name: books_redis
+    restart: always
+
+  web:
+    build: .
+    container_name: book_api
+
+    volumes:
+      - .:/book_api
+
+    command: python manage.py runserver ${APPLICATION_HOST}:${APPLICATION_PORT}
+
+    ports:
+      - "${APPLICATION_PORT}:${DOCKER_EXPOSED_PORT}"
+    env_file:
+      - .env
+    environment:
+      - WATCHFILES_FORCE_POLLING=true
+
+    restart: on-failure
+    depends_on:
+      - books_db
+      - redis
+
+  celery:
+    build: .
+    command: celery -A book_api worker -l info
+    container_name: books_celery
+    volumes:
+      - .:/book_api
+    depends_on:
+      - books_db
+      - redis
+    env_file:
+      - .env
+
+volumes:
+  books_db:
+
