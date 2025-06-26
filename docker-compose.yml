@@ -1,4 +1,18 @@
 services:
+  nginx:
+    image: nginx:latest
+    container_name: books_nginx
+
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./media:/app/media
+
+    depends_on:
+      - web
+    restart: always
+
   books_db:
     image: postgres:16
     environment:
@@ -23,7 +37,7 @@ services:
     volumes:
       - .:/book_api
 
-    command: python manage.py runserver ${APPLICATION_HOST}:${APPLICATION_PORT}
+    command: ["gunicorn", "book_api.wsgi:application", "--bind", "0.0.0.0:8000", "--workers=2"]
 
     ports:
       - "${APPLICATION_PORT}:${DOCKER_EXPOSED_PORT}"
