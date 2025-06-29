@@ -7,7 +7,7 @@ from users.models import User
 
 @pytest.mark.django_db
 def test_login_success():
-    user = User.objects.create_user(username="user", password="password")
+    User.objects.create_user(username="user", password="password")
     client = APIClient()
     response = client.post("/users/user/login/", {"username": "user", "password": "password"})
 

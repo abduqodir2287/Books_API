@@ -3,6 +3,8 @@ from rest_framework.test import APIClient
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from users.models import User
+from category.models import Category
+from books.models import Books
 
 
 
@@ -40,4 +42,20 @@ def auth_client_user(regular_token):
     client = APIClient()
     client.credentials(HTTP_AUTHORIZATION=f"Bearer {regular_token}")
     return client
+
+
+@pytest.fixture
+def create_category(db):
+    return Category.objects.create(name="Fantasy", description="Description for this category")
+
+
+@pytest.fixture
+def create_book(db, create_category):
+    return Books.objects.create(
+        title="Bolalik",
+        author="Oybek",
+        genre="Fantasy",
+        language="Uzbek",
+        category=create_category
+    )
 

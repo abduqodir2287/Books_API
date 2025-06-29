@@ -10,3 +10,4 @@ __pycache__/
 Makefile
 task.md
 README.md
+pyproject.toml

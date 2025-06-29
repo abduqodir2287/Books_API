@@ -1,7 +1,7 @@
+from category.serializers import BooksCategorySerializer
 from rest_framework.serializers import ModelSerializer
 
 from .models import Books
-from category.serializers import BooksCategorySerializer
 
 
 class BooksSerializer(ModelSerializer):

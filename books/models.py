@@ -1,6 +1,5 @@
-from django.db import models
-
 from category.models import Category
+from django.db import models
 
 
 class Books(models.Model):
