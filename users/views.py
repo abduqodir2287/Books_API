@@ -13,7 +13,7 @@ from .permissions import IsSuperAdmin, IsSelfOrSuperadmin
 
 
 class UserViewSet(ModelViewSet):
-    queryset = User.objects.all()
+    queryset = User.objects.all().order_by("id")
     serializer_class = UserSerializer
 
     def get_permissions(self):
@@ -25,6 +25,20 @@ class UserViewSet(ModelViewSet):
             return [IsSelfOrSuperadmin()]
 
         return [IsAuthenticated()]
+
+
+    @action(detail=False, methods=["get", "put", "patch"], url_path="me")
+    def me(self, request):
+        user = request.user
+
+        if request.method in ("PUT", "PATCH"):
+            serializer = self.get_serializer(user, data=request.data, partial=(request.method == "PATCH"))
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            return Response(serializer.data)
+
+        serializer = self.get_serializer(user)
+        return Response(serializer.data)
 
 
 
@@ -48,6 +62,8 @@ class UserRegistration(APIView):
                 {"refresh": str(refresh), "access": str(refresh.access_token)},
                 status=status.HTTP_201_CREATED
             )
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserLogin(APIView):

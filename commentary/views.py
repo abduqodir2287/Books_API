@@ -10,7 +10,7 @@ from .tasks import recalculate_book_rating
 
 
 class ReviewViewSet(ModelViewSet):
-    queryset = Review.objects.all()
+    queryset = Review.objects.all().order_by("id")
     serializer_class = GetReviewSerializer
     permission_classes = [IsSelfOrSuperadmin]
     lookup_field = 'pk'

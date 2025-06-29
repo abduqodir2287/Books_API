@@ -10,7 +10,7 @@ from users.permissions import IsSuperAdmin
 
 
 class BooksViewSet(ModelViewSet):
-    queryset = Books.objects.all()
+    queryset = Books.objects.all().order_by("id")
     serializer_class = BooksSerializer
 
 

@@ -9,3 +9,6 @@ migrate:
 
 celery:
 	celery -A book_api worker -l info
+
+test:
+	pytest -s -v
