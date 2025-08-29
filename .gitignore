@@ -7,7 +7,7 @@ __pycache__/
 # Static files for Api
 staticfiles/
 static/
-
+media/
 
 lib64/
 parts/

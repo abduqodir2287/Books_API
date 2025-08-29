@@ -4,11 +4,19 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from users.permissions import IsSuperAdmin
+from drf_spectacular.utils import extend_schema, extend_schema_view
 
 from .models import Books
 from .serializers import BooksSerializer, PostBookSerializer
 
 
+@extend_schema_view(
+    get=extend_schema(
+        summary="Список всех книг",
+        description="CRUD Операции для книг"
+    )
+)
+@extend_schema(tags=["books"])
 class BooksViewSet(ModelViewSet):
     queryset = Books.objects.all().order_by("id")
     serializer_class = BooksSerializer
